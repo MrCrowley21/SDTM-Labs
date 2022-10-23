@@ -1,10 +1,8 @@
-from Lab_1.cinema_operator.db_manipulator import *
-from control import *
+from character_creation.CharacterCreator import *
 
-# initiate the used classes
-database = DatabaseManipulator()
-control = Control(database)
-
-# initiate the communication with the user
-while True:
-    control.user_choose_action()
+# initialize the class creator
+character_creator = CharacterCreator()
+# create the character
+character_creator.create_character()
+# display all the characteristics of the character
+character_creator.show_character()

@@ -1,5 +1,5 @@
 # class for user definition of new objets
-from Lab_1.cinema_operator.cinematographic_object import *
+from Lab_0.cinema_operator.cinematographic_object import *
 
 
 class UserInput:

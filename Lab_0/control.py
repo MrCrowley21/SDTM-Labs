@@ -1,6 +1,6 @@
 # class for user control over the system
 from user_input import *
-from Lab_1.cinema_operator.rating_system import *
+from Lab_0.cinema_operator.rating_system import *
 
 
 class Control:
