@@ -7,6 +7,8 @@ from character_creation.PersonalityCreator import *
 from character_creation.ModifierSetter import *
 from character_creation.BackgroundCreator import *
 from character_creation.UserInteraction import *
+from character_creation.CharacterAppearance import *
+from character_creation.CharacterGeneralInformation import *
 
 
 class CharacterCreator:
@@ -29,35 +31,19 @@ class CharacterCreator:
         # initiate character saving throws
         saving_throws = modifiers.clone()
         # set all instances of the character
-        self.__set_character_name(name)
-        self.__set_class(class_name)
-        self.__set_race(race_name)
-        self.__set_background(background)
+        self.__set_character_general_info(name, class_name, race_name, background)
         self.__set_modifiers(modifiers)
         self.__set_traits(traits)
         self.__set_ideals(ideals)
         self.__set_bonds(bonds)
         self.__set_flaws(flaws)
         self.__set_saving_throws(saving_throws)
+        self.__set_character_appearance()
 
-    # set the name of the character
-    def __set_character_name(self, name):
-        self.character.name = name
-
-    # set the class of the character
-    def __set_class(self, class_name):
-        class_setter = ClassSetter(class_name)
-        class_setter.set_character_class()
-
-    # set the race of the character
-    def __set_race(self, race_name):
-        race_setter = RaceSetter(race_name)
-        race_setter.set_race()
-
-    # set the background of the character
-    def __set_background(self, background):
-        background_setter = BackgroundSetter(background)
-        background_setter.set_background()
+    # set the general character's data
+    def __set_character_general_info(self, name, class_name, race_name, background):
+        general_info_setter = CharacterGeneralInformation(self.character, name, class_name, race_name, background)
+        general_info_setter.get_character_general_data()
 
     # set the traits of the character
     def __set_traits(self, traits):
@@ -100,6 +86,9 @@ class CharacterCreator:
     # set the saving throws of the character
     def __set_saving_throws(self, saving_throws):
         self.character.saving_throws = saving_throws.get_modifier()
+
+    def __set_character_appearance(self):
+        Hair(Skin(Eyes(Weight(Height(Age(CharacterAppearance(self.character))))))).render()
 
     # show the character instances
     def show_character(self):

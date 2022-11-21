@@ -1,4 +1,6 @@
 from character_creation.Character import *
+from character_creation.Attacks import *
+from character_creation.Spells import *
 
 
 # Factory Method implementation
@@ -25,6 +27,7 @@ class Barbarian:
     def __init__(self):
         self.chr_name = 'Barbarian'
         self.characteristic = ['Strength', 'Constitution']
+        self.weapons = ['Greataxe', 'Handaxe', 'Javelin']
 
     # get the name of the class of the character
     def _get_name(self):
@@ -33,6 +36,13 @@ class Barbarian:
     # set the saving throws according to the class of the character
     def _set_saving_throws(self):
         return self.characteristic
+
+    # set the available attacks according to the provided weapons
+    def _set_damage_methods(self):
+        character_attacks = CharacterAttacks()
+        for weapon in self.weapons:
+            character_attacks.add_attack(weapon)
+        return character_attacks
 
 
 # Implementation of class "Fighter"
@@ -57,6 +67,7 @@ class Wizard:
     def __init__(self):
         self.chr_name = 'Wizard'
         self.characteristic = ['Intelligence', 'Wisdom']
+        self.spells = ['Acid Splash', 'Chill Touch', 'Encode Thoughts']
 
     # get the name of the class of the character
     def _get_name(self):
@@ -65,6 +76,13 @@ class Wizard:
     # set the saving throws according to the class of the character
     def _set_saving_throws(self):
         return self.characteristic
+
+    # set the available spells according to the provided weapons
+    def _set_damage_methods(self):
+        character_spells = CharacterSpells()
+        for spell in self.spells:
+            character_spells.add_spell(spell)
+        return character_spells
 
 
 # Implementation of class "Druid"
@@ -81,6 +99,29 @@ class Druid:
     # set the saving throws according to the class of the character
     def _set_saving_throws(self):
         return self.characteristic
+
+
+# adapter for CharacterAttacks and Character Spells methods
+class DamageAdapter:
+    def __init__(self, damage_type, adapted_methods):
+        self.damage_type = damage_type
+        self.__dict__.update(adapted_methods)
+
+    def __str__(self):
+        return str(self.damage_type)
+
+
+class DamageAdaptee:
+    def __init__(self, damage_type):
+        self.damage_type = damage_type
+
+    def get_damage_method(self):
+        if self.damage_type.__class__.__name__ == 'CharacterSpells':
+            damages = DamageAdapter(self.damage_type, dict(execute=self.damage_type.get_spells))
+            return damages
+        else:
+            damages = DamageAdapter(self.damage_type, dict(execute=self.damage_type.get_attacks))
+            return damages
 
 
 # Factory Method
@@ -117,6 +158,7 @@ class ClassSetter:
         character_class = self.chr_class.get_character_class()
         self.__set_class_name(character_class)
         self.__add_saving_throws(character_class)
+        self.__add_damage_methods_details(character_class)
 
     # set the name of the class
     def __set_class_name(self, character_class):
@@ -127,4 +169,12 @@ class ClassSetter:
         saving_throws = character_class._set_saving_throws()
         for attribute in saving_throws:
             self.character.characteristics[attribute][0] += 1
+
+    # define the spells and attacks details
+    def __add_damage_methods_details(self, character_class):
+        damage_type = character_class._set_damage_methods()
+        attacks = DamageAdaptee(damage_type).get_damage_method()
+        attacks = attacks.execute()
+        for attack in attacks:
+            self.character.attacks_and_spells.update(attack)
 

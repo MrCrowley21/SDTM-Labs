@@ -22,7 +22,9 @@ class Character:
         self.background = None
         self.money_amount = None
         self.saving_throws = None
+        self.attacks_and_spells = {}
         self.personality_characteristics = {}
+        self.appearance = {}
         self.characteristics = {
             'Strength': [0, 0],
             'Dexterity': [0, 0],

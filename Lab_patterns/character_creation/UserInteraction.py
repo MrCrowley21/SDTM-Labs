@@ -35,7 +35,7 @@ class UserInteraction:
 
     # get character class name
     def __get_class_name(self):
-        print('Great!\nNow, as your character has a name, it is time to choose his/her class. Please, choose'
+        print('Great!\nNow, as your character has a name, it is time to choose his/her class. Please, choose '
               'one from the official D&D 5 classes')
         class_name = input()
         while class_name.upper() not in self.class_list:
