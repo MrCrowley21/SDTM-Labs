@@ -101,7 +101,7 @@ class Druid:
         return self.characteristic
 
 
-# adapter for CharacterAttacks and Character Spells methods
+# adapter for CharacterAttacks and CharacterSpells methods
 class DamageAdapter:
     def __init__(self, damage_type, adapted_methods):
         self.damage_type = damage_type
@@ -111,6 +111,7 @@ class DamageAdapter:
         return str(self.damage_type)
 
 
+# adaptee for the DemageAdapter
 class DamageAdaptee:
     def __init__(self, damage_type):
         self.damage_type = damage_type
