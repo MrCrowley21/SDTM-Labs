@@ -208,8 +208,8 @@ saving_throws = modifiers.clone()
 ## Results
 &nbsp;&nbsp;&nbsp; The output of the project is an object of type dictionary, that contains all 
 described instances of a character. Let us look at an example of a character creation.
-![Alt Text](images/user_input.png)
-![Alt Text](images/result.png)
+![Alt Text](../Lab_patterns/images/user_input.png)
+![Alt Text](../Lab_patterns/images/result.png)
 
 ## Conclusions
 &ensp;&ensp;&ensp; Creational Design Patterns are aimed to solve the problems related to object
