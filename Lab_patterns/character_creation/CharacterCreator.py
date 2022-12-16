@@ -1,4 +1,5 @@
 from copy import deepcopy
+from abc import ABCMeta, abstractmethod
 
 from character_creation.Character import *
 from character_creation.ClassCreator import *
@@ -9,18 +10,54 @@ from character_creation.BackgroundCreator import *
 from character_creation.UserInteraction import *
 from character_creation.CharacterAppearance import *
 from character_creation.CharacterGeneralInformation import *
+from character_creation.MoralAxis import *
+from character_creation.Armor import *
 
 
-class CharacterCreator:
-    # initialize the creator
+# Command Pattern
+# Abstract command class
+class ICommand(metaclass=ABCMeta):
+    @staticmethod
+    @abstractmethod
+    def execute():
+        pass
+
+
+# Invoker class
+class Invoker:
     def __init__(self):
+        self._commands = {}
+
+    def register(self, command_name, command):
+        self._commands[command_name] = command
+
+    def execute(self, command_name):
+        if command_name in self._commands.keys():
+            self._commands[command_name].execute()
+        else:
+            print(f"Command [{command_name}] not recognised")
+
+
+# Receiver class
+class Receiver:
+    @staticmethod
+    def run_command():
+        pass
+
+
+# Custom (command) clas
+class CharacterCreator(ICommand):
+    # initialize the creator
+    def __init__(self, receiver):
+        self.receiver = receiver
         self.character = Character()
         self.user_input = UserInteraction()
 
-    def create_character(self):
+    def execute(self):
         # get the user input characteristics
-        name, class_name, race_name, background, characteristics, traits, ideals, bonds, flaws = \
+        name, class_name, race_name, background, characteristics, traits, ideals, bonds, flaws, life_strategy, armor = \
             UserInteraction().get_user_input()
+        # armor = UserInteraction().get_user_input()
         # check if the value for general characteristics were introduced correctly
         if len(characteristics) != len(self.character.characteristics):
             raise Exception('You introduced characteristics wrongly')
@@ -39,6 +76,8 @@ class CharacterCreator:
         self.__set_flaws(flaws)
         self.__set_saving_throws(saving_throws)
         self.__set_character_appearance()
+        self.__set_character_morality(life_strategy)
+        self.__set_character_armor(armor)
 
     # set the general character's data
     def __set_character_general_info(self, name, class_name, race_name, background):
@@ -90,6 +129,17 @@ class CharacterCreator:
     def __set_character_appearance(self):
         Hair(Skin(Eyes(Weight(Height(Age(CharacterAppearance(self.character))))))).render()
 
+    def __set_character_morality(self, morality):
+        if morality.upper() == 'LAWFUL':
+            life_strategy = Lawful()
+        else:
+            life_strategy = Chaotic()
+        return MoralAxis(life_strategy.set_moral_axis).set_moral_axis()
+
+    def __set_character_armor(self, armor):
+        for piece in armor:
+            Armor(piece[1]).set_new_armor(piece[0])
+
     # show the character instances
     def show_character(self):
         # get the character instances
@@ -97,3 +147,4 @@ class CharacterCreator:
         character_fields.pop('_Character__initialized')
         # output the character instances
         print(character_fields)
+

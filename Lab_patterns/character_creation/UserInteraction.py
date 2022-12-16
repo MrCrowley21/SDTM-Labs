@@ -25,7 +25,10 @@ class UserInteraction:
         ideals = self.__get_ideals()
         bonds = self.__get_bonds()
         flaws = self.__get_flaws()
-        return name, class_name, race_name, background, characteristics, traits, ideals, bonds, flaws
+        life_strategy = self.__get_life_strategy()
+        armor = self.__get_armor()
+        return name, class_name, race_name, background, characteristics, traits, ideals, bonds, flaws, \
+            life_strategy, armor
 
     # get character name
     def __get_name(self):
@@ -101,3 +104,19 @@ class UserInteraction:
         flaws = input()
         return flaws
 
+    # get character life strategy
+    def __get_life_strategy(self):
+        print('Are you rather lawful or chaotic!')
+        life_strategy = input()
+        return life_strategy
+
+    # get character armor
+    def __get_armor(self):
+        armor = []
+        print('Please, write the armor for head you want!')
+        armor.append((input(), 'head'))
+        print('Please, write the armor for chest you want!')
+        armor.append((input(), 'chest'))
+        print('Please, write the armor for hands you want!')
+        armor.append((input(), 'hands'))
+        return armor

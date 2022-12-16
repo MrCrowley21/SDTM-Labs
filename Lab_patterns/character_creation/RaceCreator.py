@@ -4,7 +4,6 @@ from character_creation.Character import *
 
 
 # Abstract Factor implementation
-
 # Implement that abstract character race creator
 class RaceCreator(ABC):
     # initiate the class of type RaceCreator

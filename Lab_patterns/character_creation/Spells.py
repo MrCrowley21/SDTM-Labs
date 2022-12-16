@@ -15,6 +15,8 @@ class Spells:
             return EncodeThoughts()
 
 
+# Template method
+# Template
 class Spell(ABC):
     @abstractmethod
     def __init__(self, name, s_range, duration):
@@ -28,6 +30,7 @@ class Spell(ABC):
 
 
 # The Leaf Element
+# Implementer of the template
 class AcidSplash(Spell):
     def __init__(self):
         super().__init__(name='Acid Splash', s_range=60, duration='Instantaneous')
@@ -37,6 +40,7 @@ class AcidSplash(Spell):
 
 
 # The Leaf Element
+# Implementer of the template
 class ChillTouch(Spell):
     def __init__(self):
         super().__init__(name='Chill Touch', s_range=120, duration='1 round')
@@ -46,6 +50,7 @@ class ChillTouch(Spell):
 
 
 # The Leaf Element
+# Implementer of the template
 class EncodeThoughts(Spell):
     def __init__(self):
         super().__init__(name='Encode Thoughts', s_range='self', duration='8 hours')

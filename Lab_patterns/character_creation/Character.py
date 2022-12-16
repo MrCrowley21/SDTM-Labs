@@ -1,4 +1,6 @@
+from character_creation.State import *
 # Singleton implementation
+# Mediator
 class Character:
     __instance = None  # variable that shows if the instance of that type already exists
 
@@ -22,6 +24,11 @@ class Character:
         self.background = None
         self.money_amount = None
         self.saving_throws = None
+        self.moral_axis = None
+        self.armor = []
+        self.normal_state = NormalState(self)
+        self.super_state = SuperState(self)
+        self.state = self.normal_state
         self.attacks_and_spells = {}
         self.personality_characteristics = {}
         self.appearance = {}
@@ -33,3 +40,9 @@ class Character:
             'Wisdom': [0, 0],
             'Charisma': [0, 0],
         }
+
+    def switch_to_state(self):
+        self.state.switch_to_state()
+
+    def check_special(self):
+        self.state.check_special()

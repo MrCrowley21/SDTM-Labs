@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 
 
 # Builder Implementation
-
 # Implementation of abstract method of personality characteristic creator
 class PersonalityCreator(ABC):
     # abstract method to get the personality characteristic

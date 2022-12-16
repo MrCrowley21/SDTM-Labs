@@ -6,12 +6,14 @@ character_creator_proxy = CharacterCreationProxy()
 
 # Check if valid user
 if character_creator_proxy.login_user():
-    # initialize the class creator
-    character_creator = CharacterCreator()
     # create the character
-    character_creator.create_character()
+    receiver = Receiver()
+    invoker = Invoker()
+    command = CharacterCreator(receiver)
+    invoker.register("custom_call", command)
+    invoker.execute("custom_call")
     # display all the characteristics of the character
-    character_creator.show_character()
+    command.show_character()
 # Deny users that are not in database
 else:
     print('You must be a valid user to create a character')
