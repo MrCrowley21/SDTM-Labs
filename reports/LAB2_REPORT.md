@@ -318,7 +318,7 @@ class CharacterCreationProxy:
 
 ## Results
 &nbsp;&nbsp;&nbsp; The output of the project is an object of type dictionary, that contains all 
-described instances of a character. Bellow, and invalid attempt of character creation (blocked
+described instances of a character. Bellow, an invalid attempt of character creation (blocked
 by _Proxy Method_) and a valid character creation are presented. 
 * Unsuccessful attempt of character creation
 
